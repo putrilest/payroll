@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <title>Data Penggajian</title>
+    <link rel="stylesheet" href="/css/home.css">
+
+  </head>
+
+  <body>
+     <!-- =============== Navigation ================ -->
+     <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <!-- ========================= Main ==================== -->
+      <div class="main">
+        <!-- <div class="main"> -->
+          <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+
+            <div class="searchh">
+              <form action="#" th:action="@{/searchPayroll}" method="get">
+                <label>
+                    <input type="text"placeholder="Cari" name="search">
+                    <ion-icon name="search-outline"></ion-icon>
+                </label>
+              </form>
+            </div>
+
+            <div class="userr">
+              <div class="user">
+                  <ion-icon name="person-circle-outline"></ion-icon>
+              </div>
+
+              <h3 sec:authentication="principal.username"></h3>
+            </div>
+
+          </div>
+
+        <div class="data-tabel">
+          <h1>Data Penggajian</h1>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Bulan</th>
+                  <th>Nama Pegawai</th>
+                  <th>Nama Jabatan</th>
+                  <th>Gaji Pokok</th>
+                  <th>Tunjangan Transportasi</th>
+                  <th>Uang Makan</th>
+                  <th>Potongan Gaji</th>
+                  <th>Gaji Bersih</th>
+                  <th>Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="p : ${payrolls}">
+                  <td th:text="${p.id}"></td>
+                  <td th:text="${p.month}"></td>
+                  <td th:text="${p.employee.name}"></td>
+                  <td th:text="${p.employee.position.positionName}"></td>
+                  <td th:text="${p.employee.position.basicSalary}"></td>
+                  <td th:text="${p.transportAllowance}"></td>
+                  <td th:text="${p.mealAllowance}"></td>
+                  <td th:text="${p.salaryCut}"></td>
+                  <td th:text="${p.netSalary}"></td>
+                  <td>
+                    <button sec:authorize="hasRole('ACCOUNTANT')">
+                      <a th:href="@{/updatePayroll/{id}(id=${p.id})}">
+                          <ion-icon name="create-outline"></ion-icon>
+                      </a>
+                    </button>
+    
+                    <button sec:authorize="hasRole('ACCOUNTANT')">
+                      <a th:href="@{/deletePayroll/{id}(id=${p.id})}">
+                          <ion-icon name="trash-outline"></ion-icon>
+                      </a>
+                    </button>
+    
+                    <button>
+                      <a th:href="@{/slipPayroll/{id}(id=${p.id})}">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                      </a>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+          <div class="tambah" sec:authorize="hasRole('ACCOUNTANT')">
+            <button>
+              <a th:href="@{/addPayroll}">Tambah Data Penggajian</a>
+            </button>
+    
+            <button>
+              <a th:href="@{/}">Kembali</a>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

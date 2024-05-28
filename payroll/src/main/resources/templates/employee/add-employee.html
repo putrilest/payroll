@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Tambah Data Pegawai</title>
+    <link rel="stylesheet" href="/css/home.css">
+  </head>
+
+  <body>
+     <!-- =============== Navigation ================ -->
+     <div class="container">
+        <div th:insert="~{/home :: navigation}"></div>
+      <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div th:insert="~{/home :: topbar}"></div>
+            <div class="tambah-data">
+                <h1>Tambah Pegawai</h1>
+                <form action="#" th:action="@{saveEmployee}" th:object="${newEmployee}" method="post">
+                    <input
+                        type="text"
+                        placeholder="Nama"
+                        th:field="*{name}"
+                        required
+                    />
+                    
+                    <input
+                        type="text"
+                        placeholder="Jenis Kelamin "
+                        th:field="*{gender}"
+                        required
+                    />
+
+                    <label for="address">Alamat</label>
+                    <textarea th:field="*{address}" name="address" rows="4" cols="50" required></textarea>
+
+
+                    <label for="position">Jabatan</label>
+                    <select th:field="*{position.code}" class="form-control mb-4 col-4">
+                        <option value="" selected>Select Position</option>
+                        <option th:each="pos : ${listPosition}" th:value="${pos.code}" th:text="${pos.positionName}"></option>
+                    </select>
+
+                    
+                    <input
+                        type="date"
+                        placeholder="Tanggal Masuk"
+                        th:field="*{entryDate}"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Foto"
+                        th:field="*{image}"
+                        required
+                    />
+                    <input  type="submit" value="Simpan" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  </body>
+</html>

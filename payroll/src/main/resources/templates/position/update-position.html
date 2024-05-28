@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit Jabatan</title>
+    <link rel="stylesheet" href="/css/home.css">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="edit-data">
+          <h1>Edit Jabatan</h1>
+          <form th:action="@{/savePosition}" method="post">
+            <input
+              type="hidden"
+              th:field="${position.code}"
+            />
+    
+            <input
+              type="text"
+              th:field="${position.positionName}"
+            />
+    
+            <input
+              type="number"
+              th:field="${position.basicSalary}"
+            />
+    
+            <input type="submit" value="Simpan" />
+            
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+
+  </body>
+</html>

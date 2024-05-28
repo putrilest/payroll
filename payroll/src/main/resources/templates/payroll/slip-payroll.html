@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <title>Slip Penggajian</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div class="topbar">
+          <div class="toggle">
+              <ion-icon name="menu-outline"></ion-icon>
+          </div>
+          <div class="userr">
+            <div class="user">
+                <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+
+            <h3 sec:authentication="principal.username"></h3>
+        </div>
+        </div>
+
+        <div class="slip">
+          <div id="slip-content">
+            <div class="header-slip">
+              <img src="/images/logo-toko.png" alt="">
+              <h2>Slip Gaji Karyawan</h2>
+              <h1>TOKO YOGI BANYUMAS</h1>
+              <h4>Jalan Pramuka No. 73, Kecamatan Banyumas, Kabupaten Banyumas</h4>
+            </div>
+            <hr>
+            <div class="keterangan">
+              <p>No. Slip     : <span th:text="${payroll.id}"></span></p>
+              <p>Periode      : <span th:text="${payroll.month}"></span></p>
+              <p>Nama Pegawai : <span th:text="${payroll.employee.name}"></span></p>
+              <p>Nama Jabatan : <span th:text="${payroll.employee.position.positionName}"></span></p>
+            </div>
+            
+            <div class="rincian">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Keterangan</th>
+                    <th>Jumlah</th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Gaji Pokok</td>
+                    <td>Rp. <span th:text="${payroll.employee.position.basicSalary}"></span></td>
+                  </tr>
+  
+                  <tr>
+                    <td>2</td>
+                    <td>Tunjangan Transportasi</td>
+                    <td>Rp. <span th:text="${payroll.transportAllowance}"></span></td>
+                  </tr>
+  
+                  <tr>
+                    <td>3</td>
+                    <td>Uang Makan</td>
+                    <td>Rp. <span th:text="${payroll.mealAllowance}"></span></td>
+                  </tr>
+  
+                  <tr>
+                    <td>4</td>
+                    <td>Potongan Gaji</td>
+                    <td>Rp. <span th:text="${payroll.salaryCut}"></span></td>
+                  </tr>
+  
+                  <tr>
+                    <td>5</td>
+                    <td>Gaji Bersih</td>
+                    <td>Rp. <span th:text="${payroll.netSalary}"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+  
+              <div class="ttd">
+                <table>
+                  <tr>
+                    <td>                      </td>
+                    <td>                      </td>
+                    <td>Banyumas,__________________</td>
+                  </tr>
+  
+                  <tr>
+                    <td>Yang Membuat</td>
+                    <td></td>
+                    <td>Menyetujui</td>
+                  </tr>
+  
+                  <tr>
+                    <td>Akuntan Toko</td>
+                    <td></td>
+                    <td>Manager Toko</td>
+                  </tr>
+  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+  
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+  
+                  <tr>
+                    <td>Putri Lestari</td>
+                    <td></td>
+                    <td>Ramadhan Muchtar</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+  
+          <div class="download-slip">
+            <button onclick="exportSlipToPdf()">Download Slip Gaji PDF</button>
+            <a th:href="@{/payroll}">
+              Kembali
+            </a>
+          </div>
+  
+        </div>
+
+        </div>
+
+
+    </div>
+
+    <script th:inline="javascript">
+      var employeeName = '[[${payroll.employee.name}]]';
+      var month = '[[${payroll.month}]]'
+  
+      function exportSlipToPdf() {
+          var element = document.getElementById('slip-content');
+          var options = {
+              filename: "slip" + employeeName + month + ".pdf",
+          };
+  
+          html2pdf(element, options);
+      }
+    </script>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+  </body>
+</html>

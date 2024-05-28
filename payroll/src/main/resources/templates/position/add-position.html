@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Add Position</title>
+    <link rel="stylesheet" href="/css/home.css">
+    
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="tambah-data">
+          <h1>Add Position</h1>
+          <form action="#" th:action="@{savePosition}" th:object="${newPosition}" method="post" >
+            <input
+              type="text"
+              placeholder="Nama Jabatan"
+              th:field="*{positionName}"
+              required
+            />
+            
+            <input
+              type="number"
+              placeholder="Gaji Pokok"
+              th:field="*{basicSalary}"
+              required
+              />
+    
+            <input  type="submit" value="Simpan" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+  </body>
+</html>

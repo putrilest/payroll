@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <title>Show All Position in Yogi Store</title>
+    <link rel="stylesheet" href="/css/home.css">
+  </head>
+
+  <body>
+     <!-- =============== Navigation ================ -->
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+
+      <!-- ========================= Main ==================== -->
+      <div class="main">
+          <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+
+            <div class="searchh">
+              <form action="#" th:action="@{/searchPost}" method="get">
+                <label>
+                    <input type="text"placeholder="Cari berdasarkan Nama Jabatan" name="search">
+                    <ion-icon name="search-outline"></ion-icon>
+                </label>
+              </form>
+            </div>
+
+            <div class="userr">
+              <div class="user">
+                  <ion-icon name="person-circle-outline"></ion-icon>
+              </div>
+
+              <h3 sec:authentication="principal.username"></h3>
+            </div>
+          </div>
+
+        <div class="data-tabel">
+          <h1>Data Jabatan</h1>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Kode Jabatan</th>
+                  <th>Nama Jabatan</th>
+                  <th>Gaji Pokok</th>
+                  <th sec:authorize="hasRole('MANAGER')">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="p : ${positions}">
+                  <td th:text="${p.code}"></td>
+                  <td th:text="${p.positionName}"></td>
+                  <td th:text="${p.basicSalary}"></td>
+                  <td sec:authorize="hasRole('MANAGER')">
+                      <button>
+                        <a th:href="@{/updatePosition/{code}(code=${p.code})}">
+                            <ion-icon name="create-outline"></ion-icon>
+                        </a>
+                      </button>
+      
+                      <button>
+                        <a th:href="@{/deletePosition/{code}(code=${p.code})}">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </a>
+                      </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tambah" sec:authorize="hasRole('MANAGER')">
+            <button>
+              <a th:href="@{/addPosition}">Tambah Jabatan</a>
+            </button>
+    
+            <button>
+              <a th:href="@{/}">Kembali</a>
+            </button>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  </body>
+</html>

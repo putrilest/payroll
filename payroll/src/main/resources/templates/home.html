@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Payroll Application</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="/css/home.css">
+    
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container" >
+        <div class="navigation" th:fragment="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img width="70px" height="60px" src="/images/logo-toko.png" alt="">
+                        </span>
+                        <span class="title">Penggajian Toko Yogi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/employee}">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Pegawai</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/position}">
+                        <span class="icon">
+                            <ion-icon name="briefcase-outline"></ion-icon>
+                        </span>
+                        <span class="title">Data Jabatan</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/absentSummary}">
+                        <span class="icon">
+                            <ion-icon name="clipboard-outline"></ion-icon>
+                        </span>
+                        <span class="title">Rekap Absensi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/payroll}">
+                        <span class="icon">
+                            <ion-icon name="cash-outline"></ion-icon>
+                        </span>
+                        <span class="title">Penggajian</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/information}">
+                        <span class="icon">
+                            <ion-icon name="information-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Informasi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a>
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">
+                            <form id="sign-out" th:action="@{/logout}" method="POST">
+                                <input type="submit" value="Sign Out" />
+                            </form>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar" th:fragment="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="searchh">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="userr">
+                    <div class="user">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </div>
+
+                    <h3 sec:authentication="principal.username"></h3>
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="numbers">
+                            <h3 th:text="${totalEmployees}"></h3>
+                        </div>
+                        <div class="cardName">Jumlah Pegawai</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">
+                            <h3 th:text="${totalPositions}"></h3>
+                        </div>
+                        <div class="cardName">Jumlah Jabatan</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="briefcase-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">
+                            <h4>Rp.<span th:text="${totalNetSalary}"></span></h4>
+                        </div>
+                        <div class="cardName">Total Gaji</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-img">
+                <img  src="images/dashboard.png" alt="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

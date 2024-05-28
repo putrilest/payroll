@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit Rekap Absensi</title>
+    <link rel="stylesheet" href="/css/home.css">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="edit-data">
+          <h1>Edit Rekap Absensi</h1>
+          <form th:action="@{/saveAbsentSummary}" method="post">
+            <input
+              type="hidden"
+              th:field="${absentSummary.id}"
+            />
+            
+            <label>Periode</label>
+            <input
+              type="month"
+              th:field="${absentSummary.month}"
+            />
+    
+            <label for="employee">Nama Karyawan</label>
+            <select th:field="*{absentSummary.employee.id}">
+                <option value="" disabled selected>Pilih Karyawan</option>
+                <option th:each="employee : ${listEmployee}" th:value="${employee.id}" th:text="${employee.name}"></option>
+            </select>
+            
+            <label for="">Hadir</label>
+            <input
+              type="number"
+              th:field="${absentSummary.present}"
+            />
+    
+            <label for="">Sakit</label>
+            <input
+                type="number"
+                th:field="${absentSummary.sick}"
+            />
+    
+            <label for="">Izin</label>
+            <input
+                type="number"
+                th:field="${absentSummary.excused}"
+            />
+    
+            <label for="">Alfa</label>
+            <input
+                type="number"
+                th:field="${absentSummary.unexcused}"
+            />
+    
+            <input type="submit" value="Simpan" />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+  </body>
+</html>

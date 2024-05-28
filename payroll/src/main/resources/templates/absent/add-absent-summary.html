@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Tambah Rekap Absen</title>
+    <link rel="stylesheet" href="/css/home.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+      
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="tambah-data">
+          <h1>Tambah Rekap Absen</h1>
+          <form action="#" th:action="@{saveAbsentSummary}" th:object="${newAbsentSummary}" method="post" class="d-flex flex-column mb-3">
+            
+            <label>Periode</label>
+            <input
+              type="month"
+              placeholder="Bulan"
+              th:field="*{month}"
+            />
+    
+            <label for="employee">Nama Karyawan</label>
+            <select th:field="*{employee.id}" class="form-control mb-4 col-4">
+                <option value="" selected>Pilih Karyawan</option>
+                <option th:each="employee : ${listEmployee}" th:value="${employee.id}" th:text="${employee.name}"></option>
+            </select>
+            
+            <input
+              type="number"
+              placeholder="Hadir"
+              th:field="*{present}"
+              required
+            />
+    
+            <input
+                type="number"
+                placeholder="Sakit"
+                th:field="*{sick}"
+                required
+            />
+            <input
+                type="number"
+                placeholder="Izin"
+                th:field="*{excused}"
+                required
+            />
+    
+            <input
+                type="number"
+                placeholder="Alfa"
+                th:field="*{unexcused}"
+                required
+            />
+            <input  type="submit" value="Simpan" />
+            
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+  </body>
+</html>

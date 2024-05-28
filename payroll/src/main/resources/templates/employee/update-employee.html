@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Edit Employee</title>
+    <link rel="stylesheet" href="/css/home.css">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="edit-data">
+          <h1>Edit Data Pegawai</h1>
+          <form th:action="@{/saveEmployee}" method="post">
+            <input
+              type="hidden"
+              th:field="${employee.id}"
+            />
+            
+            <label>Nama Pegawai</label>
+            <input
+              type="text"
+              th:field="${employee.name}"
+            />
+            
+            <label>Jenis Kelamin</label>
+            <input
+              type="text"
+              th:field="${employee.gender}"
+            />
+    
+            <label for="address">Alamat</label>
+            <textarea th:field="${employee.address}" name="address" rows="4" cols="50"></textarea>
+    
+    
+            <label for="position">Jabatan</label>
+            <select th:field="${employee.position.code}" >
+                <option value="" disabled selected>Pilih Jabatan</option>
+                <option th:each="pos : ${listPosition}" th:value="${pos.code}" th:text="${pos.positionName}"></option>
+            </select>
+    
+            <label for="entryDate">Tanggal Masuk</label>
+            <input
+                type="date"
+                th:field="${employee.entryDate}"
+            />
+
+            <label for="image">Foto</label>
+            <input
+                type="text"
+                th:field="${employee.image}"
+            />
+            <input type="submit" value="Simpan" />
+            
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  </body>
+</html>

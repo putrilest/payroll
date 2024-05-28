@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Tambah Data Penggajian</title>
+    <link rel="stylesheet" href="/css/home.css">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div th:insert="~{/home :: navigation}"></div>
+
+      <div class="main">
+        <div th:insert="~{/home :: topbar}"></div>
+        <div class="tambah-data">
+          <h1>Tambah Data Penggajian</h1>
+          <form action="#" th:action="@{savePayroll}" method="post" th:object="${newPayroll}" >
+       
+            <label for="employee">Nama Karyawan</label>
+            <select th:field="*{employee}" onchange="editForm(this)">
+              <option value="" selected>Pilih Karyawan</option>
+              <option th:each="employee : ${listEmployee}" th:value="${employee.id}" th:text="${employee.name}"></option>
+            </select>
+
+            <label for="month">Periode</label>
+            <input
+              type="month"
+              th:field="*{month}"
+              required
+            />
+    
+            <label>Jabatan</label>
+            <input
+                type="text"
+                id="position"
+                th:readonly="*{employee != null}"
+                readonly
+            />
+            
+            <label>Gaji Pokok</label>
+            <input
+                type="number"
+                id="basicSalary"
+                th:readonly="*{employee != null}"
+                readonly
+            />
+    
+            <label for="">Tunjangan Transprtasi</label>
+            <input
+                type="number"
+                id="transportAllowance"
+                readonly
+            />
+    
+            <label for="">Uang Makan</label>
+            <input
+                type="number"
+                id="mealAllowance"
+                readonly
+            />
+    
+            <label for="">Potongan Gaji</label>
+            <input
+                type="number"
+                th:field="*{salaryCut}"
+                oninput="updateNetSalary()"
+                required
+            />
+            
+            <input
+                type="number"
+                placeholder="Gaji Bersih"
+                th:field="*{netSalary}"
+                readonly
+            />
+    
+            <input type="submit" value="Simpan" />
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+
+      function editForm(selectElement) {
+      var selectedIndex = selectElement.selectedIndex;
+      var employeeName = selectElement.options[selectedIndex].text;
+      updatePositionAndSalary(employeeName);
+      }
+
+      function updatePositionAndSalary(employeeName) {
+          fetch('/findPositionByName?name=' + employeeName)
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                  document.getElementById('position').value = data.positionName;
+                  document.getElementById('basicSalary').value = data.basicSalary;
+                  document.getElementById('mealAllowance').value = Math.round(data.basicSalary * 0.15);
+                  document.getElementById('transportAllowance').value = Math.round(data.basicSalary * 0.10);
+                  updateNetSalary();
+              })
+              .catch(error => console.error('Error:', error));
+      }
+
+      function updateNetSalary() {
+          var basicSalary = parseInt(document.getElementById('basicSalary').value);
+          var transportAllowance = parseInt(document.getElementById('transportAllowance').value);
+          var mealAllowance = parseInt(document.getElementById('mealAllowance').value);
+          var salaryCut = parseInt(document.getElementById('salaryCut').value);
+
+          var netSalary = basicSalary + transportAllowance + mealAllowance - salaryCut;
+          document.getElementById('netSalary').value = netSalary;
+      }
+    </script>
+
+    <!-- =========== Scripts =========  -->
+    <script src="/js/home.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  </body>
+</html>
